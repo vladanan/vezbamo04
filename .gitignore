@@ -2,3 +2,4 @@ node_modules/
 beleske/
 .env
 tmp.txt
+package-lock.json
