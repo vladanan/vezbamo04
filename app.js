@@ -11,13 +11,12 @@ const path = require('path');
 // https://shadowsmith.com/how-to-deploy-an-express-api-to-vercel
 // https://github.com/ichtrojan/essential-kit/pull/11
 
-
-
 // express app
 const app = express();
 
 //https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
-//app.listen(3000, "0.0.0.0");
+//app.listen(process.env.PORT || 3000, "0.0.0.0");
+
 app.listen(3000, "0.0.0.0");
 
 //sets the app engine so exp
@@ -34,7 +33,6 @@ app.set("views", path.join(__dirname, "views"))
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Set favicon
-// app.use(favicon(path.join(__dirname, './public', 'favicon.ico')))
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // middleware & static files
@@ -46,7 +44,7 @@ app.use(fileUpload());
 
 // routes
 app.get('/', (req, res) => {
-  res.render('./index.ejs', { title: 'Home' });
+  res.render('index', { title: 'Home' });
 });
 
 // pitanja routes
