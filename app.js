@@ -29,7 +29,7 @@ app.use(fileUpload());
 
 // routes
 app.get('/', (req, res) => {
-  res.render('index.ejs', { title: 'Home' });
+  res.render('./index.ejs', { title: 'Home' });
 });
 
 // pitanja routes
