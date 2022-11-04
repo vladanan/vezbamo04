@@ -428,7 +428,7 @@ const probe_ex = (req, res) => {
 const probe = (req, res) => {
 
   var fajl = url.parse(req.url, true).query.fajl;
-  console.log("fajl1: ", fajl);
+  //console.log("fajl1: ", fajl);
 
   if (typeof fajl == 'undefined') {
 
