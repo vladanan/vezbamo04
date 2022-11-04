@@ -15,7 +15,7 @@ const app = express();
 
 //https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
 //app.listen(3000, "0.0.0.0");
-app.listen(process.env.PORT || 3000, "0.0.0.0");
+app.listen(3000, "0.0.0.0");
 
 // register view engine
 app.set('view engine', 'ejs');
@@ -29,7 +29,7 @@ app.use(fileUpload());
 
 // routes
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Home' });
+  res.render('index.ejs', { title: 'Home' });
 });
 
 // pitanja routes
