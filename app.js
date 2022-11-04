@@ -6,7 +6,7 @@ const c_testRoutes = require('./routes/c_testRoutes');
 const ajaxRoutes = require('./routes/ajaxRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const fileUpload = require('express-fileupload');
-
+const path = require('path');
 
 // Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 
@@ -17,11 +17,25 @@ const app = express();
 //app.listen(3000, "0.0.0.0");
 app.listen(3000, "0.0.0.0");
 
+//sets the app engine so exp
+app.engine("ejs", require("ejs").__express);
+
 // register view engine
 app.set('view engine', 'ejs');
 
+//specifies the path to access the views
+app.set("views", path.join(__dirname, "views"))
+
+// Set public static path
+//app.use(express.static(path.join(__dirname, './public')))
+app.use(express.static(path.join(__dirname, 'public')))
+
+// Set favicon
+// app.use(favicon(path.join(__dirname, './public', 'favicon.ico')))
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+
 // middleware & static files
-app.use(express.static('public'));
+//app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
 // default options
