@@ -1,0 +1,98 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+    <h3>Сабирање и одузимање до 10 бројчани задаци</h3>
+
+
+
+    <button class="button button1" id="dugme_za_zadatak1" onclick="noviZadatak()">Нови задатак!</button>
+      
+    <div id="zadatak"></div>
+
+    <!-- -->
+
+    <p id="resenje"></p>
+
+    
+    <form hidden id="dugme_za_zadatak2" action="../zadaci/o1m_1_10" method="get">
+      <input class="button button1" type="submit" name="dugme" value="Нови задатак?" />
+    </form>
+
+ 
+    
+    <script>
+
+
+      function noviZadatak() {
+
+        fetch('/ajax?id=o1m_1_10&faza=novi', {
+        method: 'POST', // or 'PUT'
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        // body: send_form,
+        })
+        .then(response  => response.text())
+        .then(data => {
+          // console.log('Primljeni podaci:', data);
+          document.getElementById("zadatak").innerHTML = data;
+        })
+        .catch((error) => {
+          console.error('Greška:', error);
+        });
+
+      }
+
+        
+      function resenje(a, op, b) {
+
+        var r = document.getElementById("r").value;
+        let aopbr = {a, op, b, r};
+        // poslati: a, op, b, r
+        let send_form = new FormData();
+        send_form.append('aopbr', JSON.stringify(aopbr));
+
+        var prijem = 'prijem';
+        var rr;
+
+        fetch('/ajax?id=o1m_1_10&faza=resenje', {
+          method: 'POST', // or 'PUT'
+          // headers: {
+          //   'Content-Type': 'application/json',
+          // },
+          body: send_form,
+        })
+        .then(response  => response.json())
+        .then(data => {
+
+          //console.log('Primljeni podaci:', data);
+          //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+          // SVE MORA DA BUDE OVDE INAČE NE STIGNE OBRADA NA VREME ZBOG ASINHRONOG IZVRŠAVANJA FETCH
+          // zato je dobro da se ima na raspolaganju i XMLHttpRequest()
+          // koji može da se podesi da bude i sinhron za razliku od fetch
+
+          let {rr, html_resenje} = data;
+
+          document.getElementById("rez").innerHTML = rr;
+          document.getElementById("rez").style.border = "1px solid black";
+          document.getElementById("resenje").innerHTML = html_resenje;
+          //document.getElementById("dugme_za_zadatak2").style.display = "block";
+          document.getElementById("dugme_za_zadatak2").removeAttribute("hidden");
+
+        })
+        .catch((error) => {
+          console.error('Greška:', error);
+        });
+
+      }
+
+    </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+</body>
+</html>

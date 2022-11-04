@@ -1,0 +1,184 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <div class="blogs content"></div>
+
+    <h3><a href="/admin1/update" style="border:2px solid Tomato;"><u>Izmene pitanja</u></a></h3>
+    <br>
+    <p>Na ovoj stranici odaberi da li želiš da pretražiš spiskove pitanja ili testove koje su sami pravili drugi.</p>
+    <br>
+    <div style="background: #f7f7f7; 
+          border-radius: 2px; 
+          border: 1px solid rgb(104, 104, 104); 
+          display: inline-block;
+          padding: 3px 12px;
+          /*cursor: pointer;*/">
+      <p>Upis novih pitanja: <a href="/pitanja/create"><u>ovde.</u></a></p>
+      <p>Upis korisničkih testova (za one koji nisu zadovoljni automatskim testovima): <a href="/c_test/create"><u>ovde.</u></a></p>
+      <p>(Na ovoj strani je prikazano ono što već postoji u bazi podataka i zato upiši nova pitanja ili testove da bi sebe lakše ispitao ili da bi pomogao drugima koji uče iste ili slične predmete.)</p>
+    </div>
+    <br>
+    <br>
+    <h3>Odabir predmeta za pitanja</h3>
+    <br>
+    <form id="p_predmeti" action="/pitanja/pitanja" method="POST">
+      <table>
+        <% if (p_predmeti.length > 0) { %>
+          <% let i=1 %>
+          <% p_predmeti.forEach(p_predmet => { %>
+            <% let check = 'checked'; if (i == 1) {check = 'checked'} else {check = ''}; %>
+            <!-- if petlja da bi samo prvo pitanje u formu bilo checked a ostala ne -->
+
+            <tr onclick="obeleziRadio('<%= p_predmet.predmet %>')">
+              <th>
+                <label for="<%= p_predmet.predmet %>"><%= p_predmet.predmet %></label><br>
+              </th>
+              <td>
+                <input
+                  type="radio"
+                  id="<%= p_predmet.predmet %>"
+                  name="radio1"
+                  value="<%= p_predmet.predmet %>|pitanja"
+                  required
+                  <%= check %>
+                >
+              </td>
+            </tr>
+
+            <% i++ %>
+          <% }) %>
+
+            <tr>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="text-align: right; padding-top: 5px; border: 0px solid white;">
+                <input type="submit" value="Potvrdi izbor" />
+              </td>
+            </tr>
+
+        <% } else { %>
+          <p>Nema rezultata za listu predmeta za pitanja.</p>
+        <% } %>
+      </table>
+    </form>
+
+    <br>
+    <h3>Odabir predmeta za korisničke testove</h3>
+    <br>
+
+    <form id="ct_predmeti" action="/pitanja/pitanja" method="POST">
+      <table>
+        <% if (ct_predmeti.length > 0) { %>
+          <% let i=1 %>
+          <% ct_predmeti.forEach(ct_predmet => { %>
+            <% let check = 'checked'; if (i == 1) {check = 'checked'} else {check = ''}; %>
+            <!-- if petlja da bi samo prvo pitanje u formu bilo checked a ostala ne -->
+
+            <tr onclick="obeleziRadio('<%= ct_predmet.predmet %>')">
+              <th>
+                <label for="<%= ct_predmet.predmet %>"><%= ct_predmet.predmet %></label><br>
+              </th>
+              <td>
+                <input
+                  type="radio"
+                  id="<%= ct_predmet.predmet %>"
+                  name="radio1"
+                  value="<%= ct_predmet.predmet %>|c_test"
+                  required
+                  <%= check %>
+                >
+              </td>
+            </tr>
+
+            <% i++ %>
+          <% }) %>
+
+            <tr>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="text-align: right; padding-top: 5px; border: 0px solid white;">
+                <input type="submit" value="Potvrdi izbor" />
+              </td>
+            </tr>
+
+        <% } else { %>
+          <p>Nema rezultata za listu predmeta za testove.</p>
+        <% } %>
+      </table>
+    </form>
+
+    <br>
+    <br>
+    <h3>Sva pitanja</h3>
+
+      <% if (pitanja.length > 0) { %>
+        <% pitanja.forEach(pitanje => { %>
+          <div style="background: #f7f7f7; 
+          border-radius: 2px; 
+          border: 1px solid rgb(104, 104, 104); 
+          display: inline-block;
+          padding: 3px 12px;
+          /*cursor: pointer;*/">
+
+            <h3 class="title"><%= pitanje.predmet %></h3>
+            <h4 class="snippet"><%= pitanje.g_id %>. <%= pitanje.pitanje_1 %></h4>
+            <p class="snippet"><%= pitanje.odg_1_1 %></p>
+            <br>
+            <p><%= pitanje.link1 %></p>
+            <p><%= pitanje.link2 %></p>
+            <p><%= pitanje.link3 %></p>
+
+          </div>
+          <br>
+          <br>
+        <% }) %>
+      <% } else { %>
+        <p>Nema pitanja u bazi podataka.</p>
+      <% } %>
+
+      <br>
+      <h3>Svi korisnički testovi</h3>
+
+      <table>
+        <% if (testovi.length > 0) { %>
+          <% testovi.forEach(c_test => { %>
+            <tr><td style='border: 2px solid rgb(138, 88, 88)'>
+            <a href="/c_test/c_test?id=<%= c_test.g_id %>">
+              <p><%= c_test.obrazovni_profil %>, <%= c_test.razred %>, <%= c_test.predmet %></p>
+              <p><b><%= c_test.oblast %></b></p>
+              <p><%= c_test.g_id %>. <%= c_test.pitanje_1 %></p>
+            </a>
+            </td></tr>
+          <% }) %>
+        <% } else { %>
+          <p>Nema korisničkih testova u bazi podataka.</p>
+        <% } %>
+      </table>
+
+
+  </div>
+
+  <br>
+  <p><b>Važne napomene:</b></p>
+  <p><i>Ograđujem se od mogućih nepriličnih sadržaja koje korisnici sajta unose u formulare za kreiranje novih pitanja uključujući i linkove za tekstove, fotografije i video snimke. Molim da svaki takav sadržaj prijavite na mejl priložen na kontakt strani uz navođenje nekog od prepoznatljivih podataka kao što su broj pitanja, obrazovni profil i predmet, lekcija.</i></p>
+  <br>    
+  <p><i>Korisnici ne bi trebalo da se oslanjaju samo na pitanja i odgovore u pripremi za svoje ispite i testove jer se može desiti da materijali na sajtu ne pokrivaju kompletno ili dovoljno određenu tematiku tako da sajt ne snosi krivicu ako dođe do loših rezultatima na testovima i ispitima. Dakle, ovaj sajt je samo pomoćno sredstvo u proveri znanja.</i></p>
+  <br>
+
+  <script>
+    function obeleziRadio(radioID) {
+      document.getElementById(radioID).checked = true;
+    }
+  </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <div class="blogs content"></div>
+
+    <h3><%= h4_oprp %></h3>
+    <h3>Odaberite oblasti.</h3>
+    <p>(Kliknite na jedno ili više polja i potvrdite izbor.)</p>
+    <br>
+
+    <form id="predmeti_rs" action="/pitanja/pitanja" method="POST">
+
+      <table>
+
+        <% if (predmeti_opr_o.length > 0) { %>
+          <% let i=1 %>
+          <% predmeti_opr_o.forEach(p_opr_o => { %>
+
+            <tr
+              id="<%= p_opr_o.oblast %><%= i %>"
+              onclick="promeniCheck('<%= p_opr_o.oblast %>', '<%= i %>')"
+              onmouseover="oznaci('<%= p_opr_o.oblast %>', '<%= i %>')"
+              onmouseout="vrati('<%= p_opr_o.oblast %>', '<%= i %>')"
+              >
+
+              <th>oblast</th>
+
+              <td><%= p_opr_o.oblast %></td>
+
+              <th>
+                <input
+                  type="checkbox"
+                  id="<%= p_opr_o.oblast %>"
+                  name="check3"
+                  value="<%= p_opr_o.oblast %>|<%= putnik2 %>"
+                >
+                <label
+                  for="<%= p_opr_o.oblast %>"
+                  style="color: white;">
+                </label>
+              </th>
+
+            </tr>
+
+            <tr><td style="border: 0px solid white; color: white;">-</td></tr>
+
+            <% i++ %>
+
+          <% }) %>
+
+            <tr>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="text-align: right; padding-top: 5px; border: 0px solid white;">
+                <input type="submit" id="submit" value="Potvrdi izbor" />
+              </td>
+            </tr>
+
+        <% } else { %>
+          <p>Nema rezultata za oblast i lekcije.</p>
+        <% } %>
+
+      </table>
+      
+    </form>
+
+  </div>
+
+  <br>
+
+  <script>
+
+    document.getElementById("submit").disabled = true;
+
+    //onesposobljava submit ako nijedan checkbox nije čekiran
+    function proveriCheckove() {
+      let input = document.querySelectorAll('input[type=checkbox]');
+      let f = 0;
+      input.forEach(e => {
+        if (e.checked == false) { f++; }
+      });
+      if (f == input.length) {
+        document.getElementById("submit").disabled = true;
+      } else {
+        document.getElementById("submit").disabled = false;
+      }
+    }
+
+    function promeniCheck(oblast, broj) {
+
+      //console.log(checkIDi)
+      //let ids = checkIDi.split("|");
+      let check = document.getElementById(oblast);
+
+      if (check.checked == true) {
+        check.checked = false;
+        //document.getElementById(oblast + broj).style.backgroundColor = "white";
+      } else if (check.checked == false) {
+        check.checked = true;
+        //document.getElementById(oblast + broj).style.backgroundColor = "beige";
+      }
+
+      proveriCheckove();
+
+    }
+
+    function oznaci(oblast, i) {
+      let check = document.getElementById(oblast);
+      //console.log(oblast);
+
+      if (check.checked == false) {
+        document.getElementById(oblast + i).style.backgroundColor = "beige";
+        //document.getElementById(lekcija + i).style.backgroundColor = "beige";
+      }
+    }
+
+
+    function vrati(oblast, i) {
+      let check = document.getElementById(oblast);
+      if (check.checked == false) {
+        document.getElementById(oblast + i).style.backgroundColor = "white";
+        //document.getElementById(lekcija+ i).style.backgroundColor = "white";
+      }
+    }
+
+
+  </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+
+</body>
+</html>

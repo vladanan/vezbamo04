@@ -1,0 +1,58 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+    <h3>Kombi-natorika</h3>
+    <!-- -->
+  
+    <img width="300" id="kombi_gif" src='../kombi.gif'><br>
+    <audio id="kombi_muzika" controls autoplay>
+        <source src="../Bo Burnham - Bezos I (Lyrics) ceo entrepreneur born in 1964 jeffrey jeffrey bezos.mp3" type="audio/mpeg">
+    </audio>
+    <br>
+  
+    <button class="button button1" id="dugme_za_zadatak1" onclick="noviZadatak()">Novi zadatak!</button>
+  
+    <div id="zadatak"></div>
+  
+    <!-- <p id="resenje"></p> -->
+  
+    <form hidden id="dugme_za_zadatak2" action="../zadaci/o1mat"" method="get">
+      <input class="button button1" type="submit" name="dugme" value="Novi zadatak?" />
+    </form>
+    
+    <script>
+
+      function noviZadatak() {
+
+        fetch('/ajax?id=s1m_kombi&faza=novi', {
+        method: 'POST', // or 'PUT'
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        // body: send_form,
+        })
+        .then(response  => response.text())
+        .then(data => {
+          // console.log('Primljeni podaci:', data);
+          document.getElementById("zadatak").innerHTML = data;
+          document.getElementById("kombi_gif").style.display = "none";
+          document.getElementById("kombi_muzika").style.display = "none";
+          document.getElementById("dugme_za_zadatak1").style.color = "white";
+        //document.getElementById("dugme_za_zadatak1").style.display = "none";
+        })
+        .catch((error) => {
+          console.error('Greška:', error);
+        });
+
+      }
+
+    </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+</body>
+</html>

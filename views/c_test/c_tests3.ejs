@@ -1,0 +1,44 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <table>
+    <% if (c_tests.length > 0) { %>
+      <% c_tests.forEach(c_test => { %>
+        <tr><td style='border: 2px solid rgb(138, 88, 88)'>
+        <a href="/c_test/c_test?id=<%= c_test.g_id %>">
+          <p><%= c_test.obrazovni_profil %>, <%= c_test.razred %>, <%= c_test.predmet %></p>
+          <p><b><%= c_test.oblast %></b></p>
+          <p><%= c_test.g_id %>. <%= c_test.pitanje_1 %></p>
+        </a>
+        </td></tr>
+      <% }) %>
+    <% } else { %>
+      <p>Nema korisničkih testova u bazi podataka.</p>
+    <% } %>
+  </table>
+
+
+
+  <br>
+
+  <p><b>Važne napomene:</b></p>
+  <p><i>Ograđujem se od mogućih nepriličnih sadržaja koje korisnici sajta unose u formulare za kreiranje novih pitanja uključujući i linkove za tekstove, fotografije i video snimke. Molim da svaki takav sadržaj prijavite na mejl priložen na kontakt strani uz navođenje nekog od prepoznatljivih podataka kao što su broj pitanja, obrazovni profil i predmet, lekcija.</i></p>
+  <br>    
+  <p><i>Korisnici ne bi trebalo da se oslanjaju samo na pitanja i odgovore u pripremi za svoje ispite i testove jer se može desiti da materijali na sajtu ne pokrivaju kompletno ili dovoljno određenu tematiku tako da sajt ne snosi krivicu ako dođe do loših rezultatima na testovima i ispitima. Dakle, ovaj sajt je samo pomoćno sredstvo u proveri znanja.</i></p>
+  <br>
+
+  <script>
+    function obeleziRadio(radioID) {
+      document.getElementById(radioID).checked = true;
+    }
+  </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+
+</body>
+</html>

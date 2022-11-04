@@ -1,0 +1,28 @@
+{
+  "name": "vezbamo",
+  "version": "0.4.x",
+  "description": "Aplikacija za pomoć pri učenju.",
+  "main": "app.js",
+  "scripts": {
+    "_komentar": "Za dev skript nije samo 'node app.js' nego se u komandi poziva (da se ne bi paket importovao u kod) i dotenv paket koji ucitava promenljive iz .env fajla. Takođe je stavljen i nodemon wrapper umesto node radi automatskog restarta kada app pukne. Pokreće se sa 'npm run dev'. U start skript nije stavljen dotenv jer heroku ima podešavanje za env niti nodemon jer ga heroku nema i onda app puca. Pokreće se sa 'npm start' u i VS Code i na Heroku serveru.",
+    "dev": "nodemon -r dotenv/config app.js",
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vladan Anđelković",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "express-fileupload": "^1.3.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  },
+  "engines": {
+    "node": "16.13.2"
+  }
+}

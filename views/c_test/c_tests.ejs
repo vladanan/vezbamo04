@@ -1,0 +1,107 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <!---
+  <h3>Odabir predmeta za koji se traže testovi.</h3>
+  <p>Funkcija je nedostupna dok se bude dovoljan broj testova.</p>
+  <br>
+  <p>(Kliknite predmet ili okruglo dugme i potvrdite izbor.)</p>
+  <br>
+
+  <form id="c_tests" action="/c_test/c_test" method="POST">
+
+    <table>
+
+      <% if (d_predmeti.length > 0) { %>
+        <% let i=1 %>
+        <% d_predmeti.forEach(d_predmet => { %>
+          <% let check = 'checked'; if (i == 1) {check = 'checked'} else {check = ''}; %>
+
+          <tr onclick="obeleziRadio('<%= d_predmet.predmet %>')">
+            <th>
+              <label for="<%= d_predmet.predmet %>"><%= d_predmet.predmet %></label><br>
+            </th>
+            <td>
+              <input
+                type="radio"
+                id="<%= d_predmet.predmet %>"
+                name="radio1"
+                value="<%= d_predmet.predmet %>"
+                required
+                <%= check %>
+              >
+            </td>
+          </tr>
+
+          <% i++ %>
+        <% }) %>
+
+          <tr>
+            <td style="border: 0px solid white; color: white;"></td>
+            <td style="border: 0px solid white; color: white;"></td>
+            <td style="border: 0px solid white; color: white;"></td>
+            <td style="text-align: right; padding-top: 5px; border: 0px solid white;">
+              <input type="submit" value="Potvrdi izbor" />
+            </td>
+          </tr>
+
+      <% } else { %>
+        <p>Nema rezultata za listu predmeta.</p>
+      <% } %>
+      
+    </table>
+
+  </form>
+  -->
+
+  <p>Na ovoj stranici korisnici mogu da odaberu neki od korisničkih testova.</p>
+  <br>
+  <p>Upis novih testova <i>(za one koji nisu zadovoljni automatskih testovima koje sitem pravi na osnovu dostupnih odgovora na pitanja)</i> možeš obaviti na: <a href="/c_test/create"><u>stranici za kreiranje novih posebnih testova.</u></a></p>
+  <br>
+  <p>U listama je prikazano samo ono što već postoji u bazi podataka i zato pozivam korisnike da ubacuju svoje testove kako bi sami sebe lakše ispitivali ali i da bi pomogli drugima koji uče iste predmete.</p>
+  <br>
+  <br>
+
+  <h3>Svi testovi</h3>
+
+  <table>
+    <% if (c_tests.length > 0) { %>
+      <% c_tests.forEach(c_test => { %>
+        <tr><td style='border: 2px solid rgb(138, 88, 88)'>
+        <a href="/c_test/c_test?id=<%= c_test.g_id %>">
+          <p><%= c_test.obrazovni_profil %>, <%= c_test.razred %>, <%= c_test.predmet %></p>
+          <p><b><%= c_test.oblast %></b></p>
+          <p><%= c_test.g_id %>. <%= c_test.pitanje_1 %></p>
+        </a>
+        </td></tr>
+      <% }) %>
+    <% } else { %>
+      <p>Nema korisničkih testova u bazi podataka.</p>
+    <% } %>
+  </table>
+
+
+
+  <br>
+
+  <p><b>Važne napomene:</b></p>
+  <p><i>Ograđujem se od mogućih nepriličnih sadržaja koje korisnici sajta unose u formulare za kreiranje novih pitanja uključujući i linkove za tekstove, fotografije i video snimke. Molim da svaki takav sadržaj prijavite na mejl priložen na kontakt strani uz navođenje nekog od prepoznatljivih podataka kao što su broj pitanja, obrazovni profil i predmet, lekcija.</i></p>
+  <br>    
+  <p><i>Korisnici ne bi trebalo da se oslanjaju samo na pitanja i odgovore u pripremi za svoje ispite i testove jer se može desiti da materijali na sajtu ne pokrivaju kompletno ili dovoljno određenu tematiku tako da sajt ne snosi krivicu ako dođe do loših rezultatima na testovima i ispitima. Dakle, ovaj sajt je samo pomoćno sredstvo u proveri znanja.</i></p>
+  <br>
+
+  <script>
+    function obeleziRadio(radioID) {
+      document.getElementById(radioID).checked = true;
+    }
+  </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+
+</body>
+</html>

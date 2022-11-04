@@ -1,0 +1,59 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <h1 id="admin">Brisanje pitanja i testova i update index-a</h1>
+
+  <br>
+  <h2>Brisanje</h2>
+  <form action="/admin1/delete" method="POST">
+  <table>
+    <% if (pite.length > 0) { %>
+      <% pite.forEach(pt => { %>
+        <tr>
+          <td style='border: 2px solid rgb(138, 88, 88)'><%= pt.g_id %>. <%= pt.tip %></td>
+          <td><%= pt.obrazovni_profil %>, <%= pt.razred %>, <%= pt.predmet %></td>
+          <td><%= pt.oblast %></td>
+          <th>
+            <input
+              type="checkbox"
+              id="<%= pt.g_id %>"
+              name="delete"
+              value="<%= pt.g_id %>"
+            >
+            <label
+              for="<%= pt.g_id %>"
+              style="color: white;">
+            </label>
+          </th>
+        </tr>
+      <% }) %>
+    <% } else { %>
+      <p>Nema pitanja i testova u bazi podataka.</p>
+    <% } %>
+  </table>
+  <br>
+  <p>Broj upisanih redova u bazu: <%= broj_redova %></p>
+  <br>
+  <button>Obriši pitanja/testove</button>
+  </form>
+  <br>
+
+  <br>
+  <h2>Upis novih rednih brojeva i update auto incrementa</h2>
+  <form action="/admin1/index_repair" method="POST">
+    <button>Sredi indexe</button>
+  </form>
+ 
+  <br>
+  <script>
+    
+  </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+</body>
+</html>

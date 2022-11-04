@@ -1,0 +1,65 @@
+<html lang="sr">
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <%- include("./partials/header.ejs") %>
+  <%- include("./partials/nav.ejs") %>
+
+    <table>
+      <tr>
+        <td>
+          <ul
+            id="akrostih"
+            onclick="dajAkrostih('akrostih.html')"
+            onmouseover="document.getElementById('akrostih').style.background = 'AliceBlue';"
+            onmouseleave="document.getElementById('akrostih').style.background = 'white';">
+            <li>V</li>
+            <li>Е</li>
+            <li>Ž</li>
+            <li>B</li>
+            <li>А</li>
+            <li>М</li>
+            <li>О</li>
+          </ul>
+      </td>
+    </tr>
+    <tr><td>Upiši pitanja i naučio si 30% od lekcije!</td></tr>
+    <tr><td>Uključi ispitivanje i naučio si još 30%!</td></tr>
+    <tr><td>Uključi auto test i naučio si još 30!</td></tr>
+    <tr><td>Još malo i smeši ti se odlična ocena :)</td></tr>
+    <tr><td>Kreni <a href="/pitanja/create"><u>ovde</u></a></td></tr>
+    <tr><td>Već upisana pitanja možeš videti <a href="/pitanja/pitanja"><u>ovde</u></a></td></tr>
+    
+  </table>
+
+
+  <br>
+
+  <!--
+  <table id="akrostih3" style="border: 1px solid black; padding: 3px;"></table>
+  <br>
+  <table id="akrostih2" style="border: 1px solid red; padding: 3px;"></table>
+  -->
+
+  <%- include("./partials/footer.ejs") %>
+  <%- include("./partials/footer2.ejs") %>
+
+  <script>
+    async function dajAkrostih(file) {
+      let myObject = await fetch(file);
+      let myText = await myObject.text();
+      document.getElementById("akrostih").innerHTML = myText;
+      return;
+    }
+
+    // function ajax(id) {
+    //     const xhttp = new XMLHttpRequest();
+    //     xhttp.onload = function () {
+    //       document.getElementById("akrostih2").innerHTML = xhttp.responseText;
+    //     }
+    //     xhttp.open("GET", "mysql_con.js", true);
+    //     xhttp.send();
+    // }
+  </script>
+</body>
+</html>

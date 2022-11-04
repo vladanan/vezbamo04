@@ -1,0 +1,86 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <div class="blogs content"></div>
+
+    <h3>Odaberite smer i razred za pitanja:</h3>
+    <p>(Kliknite na polje ili okruglo dugme i potvrdite izbor.)</p>
+    <br>
+
+    <form id="predmeti_rs" action="/pitanja/pitanja" method="POST">
+
+      <table>
+
+        <% if (predmeti_op_r.length > 0) { %>
+          <% let i=1 %>
+          <% predmeti_op_r.forEach(p_op_r => { %>
+            <% let check = 'checked'; if (i == 1) {check = 'checked'} else {check = ''}; %>
+            <!-- if petlja da bi samo prvo pitanje u formu bilo checked a ostala ne -->
+
+            <tr>
+              <th>smer</th>
+              <td><%= p_op_r.obrazovni_profil %></td>
+              <th rowspan="3" onclick="obeleziRadio('<%= p_op_r.obrazovni_profil %>|<%= p_op_r.razred %>')">
+                <input
+                type="radio"
+                id="<%= p_op_r.obrazovni_profil %>|<%= p_op_r.razred %>"
+                name="radio2"
+                value="<%= p_op_r.obrazovni_profil %>|<%= p_op_r.razred %>|<%= putnik1 %>"
+                required
+                <%= check %>
+                >
+              </th>
+            </tr>
+
+            <tr>
+              <th>razred</th>
+              <td><%= p_op_r.razred %></td>
+            </tr>
+
+            <tr>
+              <th>predmet</th>
+              <td><%= putnik1 %></td>
+            </tr>
+
+            <tr><td style="border: 0px solid white; color: white;">-</td></tr>
+
+            <% i++ %>
+
+          <% }) %>
+
+            <tr>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="border: 0px solid white; color: white;"></td>
+              <td style="text-align: right; padding-top: 5px; border: 0px solid white;">
+                <input type="submit" value="Potvrdi izbor" />
+              </td>
+            </tr>
+
+        <% } else { %>
+          <p>Nema rezultata za smer i razred.</p>
+        <% } %>
+
+      </table>
+      <!--<input type="submit" value="Pošalji izbor">-->
+    </form>
+
+  </div>
+
+  <br>
+
+  <script>
+    function obeleziRadio(radioID) {
+      document.getElementById(radioID).checked = true;
+    }
+  </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+
+</body>
+</html>

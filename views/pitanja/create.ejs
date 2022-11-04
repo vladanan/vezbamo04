@@ -1,0 +1,57 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <h4>Ovde se vrši upis pitanja za jednu oblast. Za svaki novi smer, predmet ili oblast pokrenuti novi upis. Nije neophodno popuniti svih 30 pitanja u formularu ali je obavezan upis prvog pitanja.</h4>
+
+  <p>Umesto upisivanja preko obrasca možeš da nam pošalješ fajl sa pitanjima. Mogu biti u sledećim formatima: xls, xlsx, ods. Primer fajla sa popunjenim pitanjima imaš: <a href="/primer_sablon_pitanja.xls" download><u>ovde.</u></a></p>
+  <br>
+  
+  <div class="create-blog content">
+    <form action="/pitanja/create" method="POST">
+
+      <button>Upiši pitanja</button>
+
+      <label for="obrazovni_profil">* Obrazovni profil (smer):</label>
+      <input type="text" maxlength="100" id="obrazovni_profil" name="obrazovni_profil" value="multimedija" required>
+
+      <label for="razred">* Razred:</label>
+      <input type="number" min="1" max="8" id="razred" name="razred" value=1 required>
+
+      <label for="predmet">* Predmet</label>
+      <input type="text" maxlength="100" id="predmet" name="predmet" value="matematika" required>
+
+      <label for="oblast">* Oblast:</label>
+      <input type="text" maxlength="100" id="oblast" name="oblast" value="sinusi" required>
+
+      <label>Dodatni linkovi uz test (Wikipedia, YouTube i sl.):</label>
+      <input type="text" maxlength="300" id="link1" name="link1" value="">
+      <input type="text" maxlength="300" id="link2" name="link2" value="">
+      <input type="text" maxlength="300" id="link3" name="link3" value="">
+
+      <p>(* Prvo pitanje je obavezno za unos a ostala nisu.)</p>
+      <% for (let i=1; i<31; i++) {%>
+
+        <% let req = 'required'; if (i == 1) {req = 'required'} else {req = ''}; %>
+        <!-- if petlja da bi samo prvo pitanje u formu bilo required a ostala ne -->
+
+        <label for="pitanje_<%= i%>"><b>Pitanje <%= i%>:</b></label>
+        <input type="text" maxlength="400" id="pitanje_<%= i%>" name="pitanje_<%= i%>" <%= req%>>
+
+        <label for="odg_<%= i%>_1">Odgovor:</label>
+        <input type="text" maxlength="300" id="odg_<%= i%>_1" name="odg_<%= i%>_1">
+
+      <% } %>
+      <button>Upiši pitanja</button>
+    </form>
+  </div>
+  <br>
+  <br>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+</body>
+</html>

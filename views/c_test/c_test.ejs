@@ -1,0 +1,264 @@
+<html lang="sr">
+<%- include("../partials/head.ejs") %>
+
+<body>
+  <%- include("../partials/header.ejs") %>
+  <%- include("../partials/nav.ejs") %>
+
+  <div class="blogs content"></div>
+
+    <h4><%= h4_oprp %>:</h4>
+
+    <table>
+      <% if (podnaslovi.length > 0) { %>
+        <% podnaslovi.forEach(podnaslov => { %>
+
+          <tr><td style="border: 0px solid white;"><%= podnaslov[0] %>.</td></tr>
+
+          <tr>
+            <th>oblast</th>
+            <td style="font-weight: bold;"><%= podnaslov[1] %></td>
+          </tr>
+          <tr style="font-size: small;">
+            <td>link 1</td>
+            <td><a href="<%= podnaslov[1] %>" target="_blank" rel="noopener noreferrer"><%= podnaslov[2] %></a></td>
+          </tr>
+          <tr style="font-size: small;">
+            <td>link 2</td>
+            <td><a href="<%= podnaslov[2] %>" target="_blank" rel="noopener noreferrer"><%= podnaslov[2] %></a></td>
+          </tr>
+          <tr style="font-size: small;">
+            <td>link 3</td>
+            <td><a href="<%= podnaslov[3] %>" target="_blank" rel="noopener noreferrer"><%= podnaslov[4] %></a></td>
+          </tr>
+          
+          <tr><td style="border: 0px solid white; color: white;"></td></tr>
+
+        <% }) %>
+      <% } else { %>
+        <p>Nema rezultata za podnaslove.</p>
+      <% } %>
+    </table>
+
+    <br>
+    <input type="radio" id="r_c_test" name="radio4" value="c_test" checked>
+    <label id="radio_c_test" for="r_c_test">Test</label>
+    <br>
+    <input type="radio" id="r_ispitivanje" name="radio4" value="ispitivanje">
+    <label for="r_ispitivanje">Nasumično ispitivanje</label>
+    <br>
+    <br>
+
+    <div id="t_ispitivanje">
+
+      <textarea
+        id="i_pitanje" rows="7" cols="55"
+        style="font-size: 16px; font-family: Arial, Helvetica, sans-serif;"
+        readonly>
+      </textarea>
+      
+      <br>
+      
+      <button class="button button1" id="i_odgovor" onclick="i_odgovor()">Odgovor</button>
+      <button class="button button1" id="i_next" onclick="ispitivanje()">Sledeće pitanje</button>
+      <table id="i_odgovor_tabela"></table>
+      
+    </div>
+    
+    </div>
+
+      <div id="t_c_test"></div>
+      
+    </div>
+
+    </div>
+
+      <div id="t_c_test_rezultat"></div>
+    
+    </div>
+
+  </div>
+
+  <br>
+
+  <script>
+
+    document.getElementById("t_ispitivanje").style.display = "none";
+
+    // let pitanja_tekst = '< %- JSON.stringify(pitanja) %>';
+    // let pitanja_sort = JSON.parse(pitanja_tekst);
+    let pitanje = '';
+    let test = []; //zadržan naziv niza zbog kompatibilnosti sa kodom od auto_testa
+    let bp; //broj pitanja
+
+
+    document.addEventListener('input',(e)=>{
+      if(e.target.getAttribute('name')=="radio4")
+
+        switch (e.target.value) {
+          case 'c_test':
+            document.getElementById("t_c_test").style.display = "block";
+            document.getElementById("t_ispitivanje").style.display = "none";
+            document.getElementById("t_c_test_rezultat").style.display = "block";
+            break;
+          case 'ispitivanje':
+            document.getElementById("t_c_test").style.display = "none";
+            document.getElementById("t_ispitivanje").style.display = "block";
+            document.getElementById("t_c_test_rezultat").style.display = "none";
+            ispitivanje();
+            break;
+          default:
+        }
+
+    });
+
+    
+    c_test_pak();
+
+    function c_test_pak() {
+
+      let c_test_html_form = '<%- c_test_html_form %>';
+
+      let c_test_niz_tex = '<%- JSON.stringify(c_test_niz) %>';
+      test = JSON.parse(c_test_niz_tex);
+
+      bp =  test.length;
+
+      document.getElementById("t_c_test").innerHTML = c_test_html_form;
+      
+    }
+
+
+
+    function pregled_testa () {
+
+      let index_tacnog;
+      let rez_testa = [];
+      let send_form = new FormData();
+
+      for (let i = 0; i < bp; i++) {
+        let radio_skup = document.getElementsByName(i+1);
+        for (let j = 0; j < 4; j++) {
+          if (radio_skup[j].checked == true) {
+            index_tacnog = parseInt(radio_skup[j].value);
+          }
+        }
+        rez_testa[i] = {
+          broj_pitanja: i,
+          odabran: index_tacnog
+        };
+      }
+
+      send_form.append('rez_testa', JSON.stringify(rez_testa));
+      send_form.append('test', JSON.stringify(test));
+
+
+      // ajax
+      // umesto sa XMLHttpRequest() kod auto_testa
+      // odrađen sa fetch()
+      // jedna od prednosti ako sam dobro video da može da šalje i tekst
+      // i fajlove
+
+      fetch('/ajax?id=pregled_testa', {
+        method: 'POST', // or 'PUT'
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        body: send_form,
+      })
+      .then(response  => response.text())
+      .then(data => {
+        //console.log('Primljeni podaci:', data);
+        document.getElementById("t_c_test_rezultat").innerHTML = data;
+      })
+      .catch((error) => {
+        console.error('Greška:', error);
+      });
+
+
+    }
+
+
+
+    function ispitivanje() {
+
+      let pitanja = [];
+      pitanja = test;
+      //console.log(pitanja)
+
+      document.getElementById("i_odgovor_tabela").style.display = "none";
+      let i_odgovor = document.getElementById("i_odgovor");
+
+      rnd_pitanje = rndInt(0, bp-1);
+      
+      pitanje = '';
+      odgovor = '';
+
+      // pitanja[rnd_pitanje]['pitanje_' + rnd_pitanje] ovo ne radi iz nepoznatog razloga
+      //console.log(bp, rnd_pitanje)
+      let tacan = 0;
+
+      // property se pretražuje abc redom tako da se odgovor ispita pre tacan i onda je uvek nula
+      // tako da mora iz dva puta
+      
+      for (property in pitanja[rnd_pitanje]) {
+        if (property.includes('pitanje')) {
+          pitanje = pitanja[rnd_pitanje][property];
+        }
+        if (property.includes('tacan')) {
+          tacan = parseInt(pitanja[rnd_pitanje][property]);
+          //console.log(tacan)
+        }
+      }
+      for (property in pitanja[rnd_pitanje]) {
+        if (property.includes('odgovor'+tacan)) {
+          odgovor = pitanja[rnd_pitanje][property];
+        }
+      }
+
+      //console.log(tacan, pitanja[rnd_pitanje]['odgovor'+tacan])
+
+      if (odgovor == '') {
+        i_odgovor.style.visibility = "hidden";
+      } else {
+        i_odgovor.style.visibility = "visible";
+      }
+
+      document.getElementById("i_pitanje").innerHTML = (rnd_pitanje+1) + '. ' + pitanje;
+
+    }
+
+
+    function i_odgovor() {
+
+      // let pitanja = [];
+      // pitanja = pitanja_sort;
+
+      let tabela = '<tr><th>' + odgovor + '</th></tr>';
+
+      if (document.getElementById("i_odgovor_tabela").style.display == "block") {
+        document.getElementById("i_odgovor_tabela").style.display = "none";
+      } else {
+        document.getElementById("i_odgovor_tabela").style.display = "block";
+      }
+
+      document.getElementById("i_odgovor_tabela").innerHTML = tabela;
+      //console.log('odgovor tabela: ', tabela);
+
+    }
+
+
+    // daje random int uključujući min i max vrednosti
+    function rndInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
+
+
+
+  </script>
+
+  <%- include("../partials/footer.ejs") %>
+  <%- include("../partials/footer2.ejs") %>
+
+</body>
+</html>
