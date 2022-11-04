@@ -8,7 +8,10 @@ const adminRoutes = require('./routes/adminRoutes');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 
-// Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
+// https://shadowsmith.com/how-to-deploy-an-express-api-to-vercel
+// https://github.com/ichtrojan/essential-kit/pull/11
+
+
 
 // express app
 const app = express();
