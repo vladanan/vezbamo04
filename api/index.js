@@ -1,11 +1,11 @@
 const app = require('express')();
-//const express = require('express');
-const pitanjaRoutes = require('./routes/pitanjaRoutes');
-const zadaciRoutes = require('./routes/zadaciRoutes');
-const sajtRoutes = require('./routes/sajtRoutes');
-const c_testRoutes = require('./routes/c_testRoutes');
-const ajaxRoutes = require('./routes/ajaxRoutes');
-const adminRoutes = require('./routes/adminRoutes');
+const express = require('express');
+const pitanjaRoutes = require('../routes/pitanjaRoutes');
+const zadaciRoutes = require('../routes/zadaciRoutes');
+const sajtRoutes = require('../routes/sajtRoutes');
+const c_testRoutes = require('../routes/c_testRoutes');
+const ajaxRoutes = require('../routes/ajaxRoutes');
+const adminRoutes = require('../routes/adminRoutes');
 const fileUpload = require('express-fileupload');
 
 
