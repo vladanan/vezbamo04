@@ -2,7 +2,7 @@
 const mysql = require('mysql2');
 
 //freesqldatabase.com
-var pool = mysql.createPool({
+/* var pool = mysql.createPool({
     host: process.env.FREE_MYSQL_HOST,
     port: process.env.FREE_MYSQL_PORT,
     user: process.env.FREE_MYSQL_USER,
@@ -12,10 +12,10 @@ var pool = mysql.createPool({
     debug: false,
     waitForConnections: true,
     queueLimit: 0
-});
+}); */
 
 //planet scale
-/* var pool = mysql.createPool({
+var pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
     port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USER,
@@ -24,8 +24,11 @@ var pool = mysql.createPool({
     connectionLimit: 1000,
     debug: false,
     waitForConnections: true,
-    queueLimit: 0
-}); */
+    queueLimit: 0,
+    ssl: {
+        rejectUnauthorized: true
+    }
+});
 
 var getConnection = (function(callback) {
     pool.getConnection(function(err, connection) {
