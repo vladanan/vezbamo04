@@ -10,19 +10,6 @@ const adminRoutes = require('./routes/adminRoutes');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 
-const Vue = require('vue')
-const { BootstrapVue, IconsPlugin } = require('bootstrap-vue')
-
-// Import Bootstrap and BootstrapVue CSS files (order is important)
-//require ('bootstrap/dist/css/bootstrap.css')
-//require ('bootstrap-vue/dist/bootstrap-vue.css')
-
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-
-
 // https://shadowsmith.com/how-to-deploy-an-express-api-to-vercel
 // https://github.com/ichtrojan/essential-kit/pull/11
 
@@ -50,7 +37,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Postavlja pod imenom node_mod staticki path node_modules da bi se koristio
 // u .ejs fajlovima jer ejs svaki path posmatra relativno u odnosu na njegov view folder koji
 // je gore podešen tako da u .ejs fajlovima ne može da se pristupi ničemu ispot tog foldera
-app.use("/styl", express.static(path.join(__dirname, "styles")));
+//app.use("/styl", express.static(path.join(__dirname, "styles")));
+//app.use("/nodes", express.static(path.join(__dirname, "node_modules")));
 
 // Set favicon
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
