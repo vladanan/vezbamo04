@@ -16,11 +16,10 @@ const mysql = require('mysql2');
 
 //planet scale
 var pool = mysql.createPool({
-    host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASS,
-    database: process.env.MYSQL_DATABASE,
+    host: process.env.PLANETSCALE_DB_HOST,
+    user: process.env.PLANETSCALE_DB_USERNAME,
+    password: process.env.PLANETSCALE_DB_PASSWORD,
+    database: process.env.PLANETSCALE_DB,
     connectionLimit: 1000,
     debug: false,
     waitForConnections: true,
