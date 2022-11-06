@@ -3,38 +3,39 @@
 <%- include("./partials/head.ejs") %>
 
 <body>
-  <%- include("./partials/header-bs.ejs") %>
-  <%- include("./partials/nav.ejs") %>
+  <%- include("./partials/header.ejs") %>
 
-    <table>
-      <tr>
-        <td>
-          <ul
-            id="akrostih"
-            onclick="dajAkrostih('akrostih.html')"
-            onmouseover="document.getElementById('akrostih').style.background = 'AliceBlue';"
-            onmouseleave="document.getElementById('akrostih').style.background = 'white';">
-            <li>V</li>
-            <li>Е</li>
-            <li>Ž</li>
-            <li>B</li>
-            <li>А</li>
-            <li>М</li>
-            <li>О</li>
-          </ul>
-      </td>
-    </tr>
-    <tr><td>Upiši pitanja i naučio si 30% od lekcije!</td></tr>
-    <tr><td>Uključi ispitivanje i naučio si još 30%!</td></tr>
-    <tr><td>Uključi auto test i naučio si još 30!</td></tr>
-    <tr><td>Još malo i smeši ti se odlična ocena :)</td></tr>
-    <tr><td>Kreni <a href="/pitanja/create"><u>ovde</u></a></td></tr>
-    <tr><td>Već upisana pitanja možeš videti <a href="/pitanja/pitanja"><u>ovde</u></a></td></tr>
-    
-  </table>
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
 
-
-  <br>
+    <div class="site-title">
+      <p>Sajt za pomoć u učenju (alpha 0.4.1)<br><br>&#128679;<mark><b>SITE IN CONNSTRUCTION!</b></mark>&#128679;</p>
+    </div>
+    <div>
+            <ul
+              id="akrostih"
+              onclick="dajAkrostih('akrostih.html')"
+              onmouseover="document.getElementById('akrostih').style.background = 'AliceBlue';"
+              onmouseleave="document.getElementById('akrostih').style.background = 'white';">
+              <li>V</li>
+              <li>Е</li>
+              <li>Ž</li>
+              <li>B</li>
+              <li>А</li>
+              <li>М</li>
+              <li>О</li>
+            </ul>
+          </div>
+          <div>
+      <p>Upiši pitanja i naučio si 30% od lekcije!</p>
+      <p>Uključi ispitivanje i naučio si još 30%!</p>
+      <p>Uključi auto test i naučio si još 30!</p>
+      <p>Još malo i smeši ti se odlična ocena :)</p>
+      <p>Kreni <a href="/pitanja/create"><u>ovde</u></a></p>
+      <p>Već upisana pitanja možeš videti <a href="/pitanja/pitanja"><u>ovde</u></a></p> 
+    </div>
+    </div>
+  </div>
 
   <!--
   <table id="akrostih3" style="border: 1px solid black; padding: 3px;"></table>
