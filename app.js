@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Postavlja pod imenom node_mod staticki path node_modules da bi se koristio
 // u .ejs fajlovima jer ejs svaki path posmatra relativno u odnosu na njegov view folder koji
 // je gore podešen tako da u .ejs fajlovima ne može da se pristupi ničemu ispot tog foldera
-app.use("/node_mod", express.static(path.join(__dirname, "node_modules")));
+app.use("/styl", express.static(path.join(__dirname, "styles")));
 
 // Set favicon
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
