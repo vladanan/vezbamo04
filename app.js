@@ -32,7 +32,7 @@ const app = express();
 //https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
 //app.listen(process.env.PORT || 3000, "0.0.0.0");
 
-app.listen(3000, "0.0.0.0");
+app.listen(3001, "0.0.0.0");
 
 //sets the app engine so exp
 app.engine("ejs", require("ejs").__express);
