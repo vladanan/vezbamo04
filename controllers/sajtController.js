@@ -506,6 +506,86 @@ const probe = (req, res) => {
   
 }
 
+const probe_bv = (req, res) => {
+
+  var fajl = url.parse(req.url, true).query.fajl;
+  //console.log("fajl1: ", fajl);
+
+  if (typeof fajl == 'undefined') {
+
+    res.render('sajt/probe_bv', {
+      title: 'ProbeBVnpm'
+    });
+
+  } else {
+
+    var cpus = "<ul>"
+    os.cpus().forEach(function (item) {
+      cpus += (
+        '<li>model: ' + item.model + '</li>' +
+        '<li>speed: ' + item.speed + '</li>' +
+        '<li>times: ' + JSON.stringify(item.times) + '</li>' + '<br>')
+    })
+    cpus += "</ul>"
+    
+    var user = "<ul>"
+    user += (
+        '<li>uid: ' + os.userInfo().uid + '</li>' +
+        '<li>gid: ' + os.userInfo().gid + '</li>' +
+        '<li>username: ' + os.userInfo().username + '</li>' +
+        '<li>homedir: ' + os.userInfo().homedir + '</li>' +
+        '<li>shell: ' + os.userInfo().shell + '</li>' + '<br>'
+    )
+    user += "</ul>"
+
+    var net = "<ul>"
+    //console.log(os.networkInterfaces()['lo'][0].address)
+    for (var net2 in os.networkInterfaces()) {
+      net += (net2 + ':')
+      for (var net3 of os.networkInterfaces()[net2]) {
+        net += (
+          '<li>address: ' + net3.address + '</li>' +
+          '<li>netmask: ' + net3.netmask + '</li>' +
+          '<li>family: ' + net3.family + '</li>' + '<br>'
+        )
+      }
+    }
+    net += "</ul>"
+
+    const d = new Date();
+
+    var data = `
+    <!DOCTYPE html>
+    <html>
+    <body>
+      <small><b><u>${d}</u></b></small>
+      <h1>Sistem: ${os.type()}</h1>
+      <p>ARHITEKTURA: ${os.arch()}</p>
+      <ul>
+        <li>OS RELEASE: ${os.release()}</li>
+        <li>OS UPTIME: ${os.uptime()} secconds</li>
+        <br>
+        <li>PROCESORI: ${cpus}</li>
+        <br>
+        <li>MEMORIJA: ${os.totalmem()}kb</li>
+        <br>
+        <li>OS HOSTNAME: ${os.hostname()}</li>
+        <li>USER INFO: ${user}</li>
+        <br>
+        <li>MREŽA: ${net}</li>
+        <br>
+        <li>SYS CONSTANTS: ${JSON.stringify(os.constants)}</li>
+      </ul>
+      </body>
+    </html> 
+    `
+
+    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+    res.write(data);
+    return res.end();
+  }
+  
+}
 
 module.exports = {
   about,
@@ -518,5 +598,6 @@ module.exports = {
   fileupload,
   user,
   user_post,
-  probe
+  probe,
+  probe_bv
 }

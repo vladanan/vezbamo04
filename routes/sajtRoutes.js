@@ -16,5 +16,6 @@ router.get('/user', sajtController.user);
 router.post('/user', sajtController.user_post);
 
 router.get('/probe', sajtController.probe);
+router.get('/probe_bv', sajtController.probe_bv);
 
 module.exports = router;

@@ -1,12 +1,27 @@
 const express = require('express');
+
 const pitanjaRoutes = require('./routes/pitanjaRoutes');
 const zadaciRoutes = require('./routes/zadaciRoutes');
 const sajtRoutes = require('./routes/sajtRoutes');
 const c_testRoutes = require('./routes/c_testRoutes');
 const ajaxRoutes = require('./routes/ajaxRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+
 const fileUpload = require('express-fileupload');
 const path = require('path');
+
+const Vue = require('vue')
+const { BootstrapVue, IconsPlugin } = require('bootstrap-vue')
+
+// Import Bootstrap and BootstrapVue CSS files (order is important)
+//require ('bootstrap/dist/css/bootstrap.css')
+//require ('bootstrap-vue/dist/bootstrap-vue.css')
+
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+
 
 // https://shadowsmith.com/how-to-deploy-an-express-api-to-vercel
 // https://github.com/ichtrojan/essential-kit/pull/11
@@ -31,6 +46,11 @@ app.set("views", path.join(__dirname, "views"))
 // Set public static path
 //app.use(express.static(path.join(__dirname, './public')))
 app.use(express.static(path.join(__dirname, 'public')))
+
+// Postavlja pod imenom node_mod staticki path node_modules da bi se koristio
+// u .ejs fajlovima jer ejs svaki path posmatra relativno u odnosu na njegov view folder koji
+// je gore podešen tako da u .ejs fajlovima ne može da se pristupi ničemu ispot tog foldera
+app.use("/node_mod", express.static(path.join(__dirname, "node_modules")));
 
 // Set favicon
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
