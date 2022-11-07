@@ -1,13 +1,8 @@
-<html lang="sr">
-<%- include("../partials/head.ejs") %>
+<%- include(appDir + '/views/partials/t'); %>
+  <div class="container">
 
-<body>
-  <%- include("../partials/header.ejs") %>
-
-    <h3>Смешни текстуални задаци</h3>
-    <h4>сабирање и одузимање до 10</h4>
-
-
+    <h2>Смешни текстуални задаци</h2>
+    <h3>сабирање и одузимање до 10</h3>
 
     <button class="button button1" id="dugme_za_zadatak1" onclick="noviZadatak()">Нови задатак!</button>
       
@@ -20,76 +15,71 @@
     <form hidden id="dugme_za_zadatak2" action="../zadaci/o1m_1_10txt"" method="get">
       <input class="button button1" type="submit" name="dugme" value="Нови задатак?" />
     </form>
-    
-    <script>
 
-      function noviZadatak() {
+  </div>    
 
-        fetch('/ajax?id=o1m_1_10txt&faza=novi', {
+  <script>
+
+    function noviZadatak() {
+
+      fetch('/ajax?id=o1m_1_10txt&faza=novi', {
+      method: 'POST', // or 'PUT'
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
+      // body: send_form,
+      })
+      .then(response  => response.text())
+      .then(data => {
+        // console.log('Primljeni podaci:', data);
+        document.getElementById("zadatak").innerHTML = data;
+      })
+      .catch((error) => {
+        console.error('Greška:', error);
+      });
+
+    }
+      
+    function resenje(a, b) {
+
+      var r = document.getElementById("r").value;
+      // poslati: a, b, r
+      let send_form = new FormData();
+      send_form.append('abr', JSON.stringify({a, b, r}));
+      
+      var prijem = 'prijem';
+      var rr;
+
+      fetch('/ajax?id=o1m_1_10txt&faza=resenje', {
         method: 'POST', // or 'PUT'
         // headers: {
         //   'Content-Type': 'application/json',
         // },
-        // body: send_form,
-        })
-        .then(response  => response.text())
-        .then(data => {
-          // console.log('Primljeni podaci:', data);
-          document.getElementById("zadatak").innerHTML = data;
-        })
-        .catch((error) => {
-          console.error('Greška:', error);
-        });
+        body: send_form,
+      })
+      .then(response  => response.json())
+      .then(data => {
 
-      }
-        
-      function resenje(a, b) {
+        //console.log('Primljeni podaci:', data);
+        // SVE MORA DA BUDE OVDE INAČE NE STIGNE OBRADA NA VREME ZBOG ASINHRONOG IZVRŠAVANJA FETCH
+        // zato je dobro da se ima na raspolaganju i XMLHttpRequest()
+        // koji može da se podesi da bude i sinhron za razliku od fetch
 
-        var r = document.getElementById("r").value;
-        // poslati: a, b, r
-        let send_form = new FormData();
-        send_form.append('abr', JSON.stringify({a, b, r}));
-        
-        var prijem = 'prijem';
-        var rr;
+        let {rr, html} = data;
 
-        fetch('/ajax?id=o1m_1_10txt&faza=resenje', {
-          method: 'POST', // or 'PUT'
-          // headers: {
-          //   'Content-Type': 'application/json',
-          // },
-          body: send_form,
-        })
-        .then(response  => response.json())
-        .then(data => {
+        document.getElementById("rez").innerHTML = rr;
+        document.getElementById("rez").style.border = "1px solid black";
 
-          //console.log('Primljeni podaci:', data);
-          // SVE MORA DA BUDE OVDE INAČE NE STIGNE OBRADA NA VREME ZBOG ASINHRONOG IZVRŠAVANJA FETCH
-          // zato je dobro da se ima na raspolaganju i XMLHttpRequest()
-          // koji može da se podesi da bude i sinhron za razliku od fetch
+        document.getElementById("resenje").innerHTML = html;
+        document.getElementById("dugme_za_zadatak2").removeAttribute("hidden");
 
-          let {rr, html} = data;
+      })
+      .catch((error) => {
+        console.error('Greška:', error);
+      });
+      
+    }
 
-          document.getElementById("rez").innerHTML = rr;
-          document.getElementById("rez").style.border = "1px solid black";
+  </script>
 
-          document.getElementById("resenje").innerHTML = html;
-          document.getElementById("dugme_za_zadatak2").removeAttribute("hidden");
-
-        })
-        .catch((error) => {
-          console.error('Greška:', error);
-        });
-        
-        
-
-
-        
-      }
-
-    </script>
-
-  <%- include("../partials/footer.ejs") %>
-  <%- include("../partials/footer2.ejs") %>
-</body>
-</html>
+<%- include(appDir + '/views/partials/t2'); %>

@@ -509,12 +509,12 @@ const probe = (req, res) => {
 const probe_bv = (req, res) => {
 
   var fajl = url.parse(req.url, true).query.fajl;
-  //console.log("fajl1: ", fajl);
+  //console.log("fajl bv: ", fajl);
 
   if (typeof fajl == 'undefined') {
 
     res.render('sajt/probe_bv', {
-      title: 'ProbeBVnpm'
+      title: 'Probe V'
     });
 
   } else {
@@ -558,11 +558,12 @@ const probe_bv = (req, res) => {
     <!DOCTYPE html>
     <html>
     <body>
-      <small><b><u>${d}</u></b></small>
+      <small><b><a href="/sajt/probe_bv">${d}</a></b></small>
       <h1>Sistem: ${os.type()}</h1>
       <p>ARHITEKTURA: ${os.arch()}</p>
       <ul>
         <li>OS RELEASE: ${os.release()}</li>
+        <br>
         <li>OS UPTIME: ${os.uptime()} secconds</li>
         <br>
         <li>PROCESORI: ${cpus}</li>
@@ -570,6 +571,7 @@ const probe_bv = (req, res) => {
         <li>MEMORIJA: ${os.totalmem()}kb</li>
         <br>
         <li>OS HOSTNAME: ${os.hostname()}</li>
+        <br>
         <li>USER INFO: ${user}</li>
         <br>
         <li>MREŽA: ${net}</li>

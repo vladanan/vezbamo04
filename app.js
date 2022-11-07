@@ -34,6 +34,12 @@ app.set("views", path.join(__dirname, "views"))
 //app.use(express.static(path.join(__dirname, './public')))
 app.use(express.static(path.join(__dirname, 'public')))
 
+// postavljanje promenljive za root aplikacije
+// koja je dostupna u ejs fajlovima
+// tako da se iz svakog foldera može na isti način da stigne
+// do partials
+app.locals.appDir = __dirname;
+
 // Postavlja pod imenom node_mod staticki path node_modules da bi se koristio
 // u .ejs fajlovima jer ejs svaki path posmatra relativno u odnosu na njegov view folder koji
 // je gore podešen tako da u .ejs fajlovima ne može da se pristupi ničemu ispot tog foldera

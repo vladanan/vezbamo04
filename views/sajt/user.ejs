@@ -1,121 +1,97 @@
-<!doctype html>
-<html lang="sr">
+<%- include(appDir + '/views/partials/t'); %>
+  
+  <div class="container">
 
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <p class="h3 fw-bold text-success bg-white">Korisnički portal</p>
+    <br>
+    <p>Pošalji nam fajl sa pitanjima ili testom. Mogu biti u sledećim formatima: xls, xlsx, ods.</p>
+    <p>Primer fajla sa popunjenim pitanjima imaš: <a href="/primer_sablon_pitanja.xls" download><u>ovde</u></a>.</p>
+    <p>Primer fajla sa popunjenim testom imaš: <a href="/primer_sablon_test.xls" download><u>ovde</u></a>.</p>
+
+    <form action="/sajt/fileupload" method="post" enctype="multipart/form-data" accept=".xls,.xlsx,.ods">
+      <label onclick="document.getElementById('fajl').click();"
+        style="background: #f7f7f7; 
+        border-radius: 2px; 
+        border: 1px solid rgb(104, 104, 104); 
+        display: inline-block;
+        padding: 3px 12px;
+        cursor: pointer;">
+        <u>Odaberi fajl</u>
+      </label> 
+      <input type='file' name="fajl" id="fajl" style="display:none">
+      <input type="submit" value="Pošalji">
+    </form>
+
+    <br>
+    <br>
+
+    <p style="border:1px solid Tomato;">Pre pisanja poruke pogledaj: <a href="/sajt/faq"><u>najčešće postavljana pitanja</u></a>.</p>
+    <form action="/sajt/user" method="POST">
+
+      <table>
+        <tr>
+          <td>
+            <label for="ime_tag">* Ime/tag:</label>
+          </td>
+          <td style="border: 0px solid white;">
+            <input type="text" maxlength="45" id="ime_tag" name="ime_tag" value="" required><br>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="mejl">Email:</label>
+          </td>
+          <td style="border: 0px solid white;">
+            <input type="text" maxlength="45" id="mejl" name="mejl" value=""><br>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="tema">* Tema</label>
+          </td>
+          <td style="border: 0px solid white;">
+            <input type="text" maxlength="100" id="tema" name="tema" value="" required><br>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="poruka">* Poruka:</label>
+          </td>
+          <td style="border: 0px solid white;">
+            <textarea id="poruka" name="poruka" maxlength="1000" rows="4" cols="50" required></textarea><br>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="border: 0px solid white;">
+            <button>Upiši poruku</button>
+          </td>
+          <td style="border: 0px solid white; font-size: small;">
+            (Email adresa neće biti prikazana u spisku poruka na sajtu.)
+          </td>
+        </tr>
+
+      </table>
     
-  </head>
+    </form>
 
-<%- include("../partials/head.ejs") %>
+    <br>
+    <br>
+    <p>Nove poruke:</p>
+    
+    <div id="poruke"></div>
 
-<body>
-  <%- include("../partials/header.ejs") %>
-
-  <p class="h2 fw-bold text-danger bg-dark">Korisnički portal</p>
-
-  <div class="text-end fs-20 pt-1 pb-2">
-  (stranica je u izradi)
   </div>
-
-  
-  
-  <p>Pošalji nam fajl sa pitanjima ili testom. Mogu biti u sledećim formatima: xls, xlsx, ods.</p>
-  <br>
-  <p>Primer fajla sa popunjenim pitanjima imaš: <a href="/primer_sablon_pitanja.xls" download><u>ovde.</u></a></p>
-  <br>
-  <p>Primer fajla sa popunjenim testom imaš: <a href="/primer_sablon_test.xls" download><u>ovde.</u></a></p>
-  <br>
-  <form action="/sajt/fileupload" method="post" enctype="multipart/form-data" accept=".xls,.xlsx,.ods">
-
-    <label onclick="document.getElementById('fajl').click();"
-      style="background: #f7f7f7; 
-      border-radius: 2px; 
-      border: 1px solid rgb(104, 104, 104); 
-      display: inline-block;
-      padding: 3px 12px;
-      cursor: pointer;">
-      <u>Odaberi fajl</u>
-    </label> 
-
-    <input type='file' name="fajl" id="fajl" style="display:none">
-
-    <input type="submit" value="Pošalji">
-
-  </form>
-
-  
-  <br>
-  <br>
-
-  <p style="border:1px solid Tomato;">Pre pisanja poruke pogledaj: <a href="/sajt/faq"><u>najčešće postavljana pitanja.</u></a></p>
-  <br>
-  <br>
-
-  <form action="/sajt/user" method="POST">
-
-    <table>
-      <tr>
-        <td>
-          <label for="ime_tag">* Ime/tag:</label>
-        </td>
-        <td style="border: 0px solid white;">
-          <input type="text" maxlength="45" id="ime_tag" name="ime_tag" value="" required><br>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <label for="mejl">Email:</label>
-        </td>
-        <td style="border: 0px solid white;">
-          <input type="text" maxlength="45" id="mejl" name="mejl" value=""><br>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <label for="tema">* Tema</label>
-        </td>
-        <td style="border: 0px solid white;">
-          <input type="text" maxlength="100" id="tema" name="tema" value="" required><br>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <label for="poruka">* Poruka:</label>
-        </td>
-        <td style="border: 0px solid white;">
-          <textarea id="poruka" name="poruka" maxlength="1000" rows="4" cols="50" required></textarea><br>
-        </td>
-      </tr>
-
-      <tr>
-        <td style="border: 0px solid white;">
-          <button>Upiši poruku</button>
-        </td>
-        <td style="border: 0px solid white; font-size: small;">
-          (Email adresa neće biti prikazana u spisku poruka na sajtu.)
-        </td>
-      </tr>
-
-    </table>
-  
-  </form>
-
-  <br>
-
-  <p>Nove poruke:</p>
-  <br>
-  <div id="poruke"></div>
 
   <script>
 
     let poruke_tekst = '<%- JSON.stringify(poruke) %>';
     let poruke_sort = JSON.parse(poruke_tekst);
 
-    let html = '<br>';
+    let html = '';
     let datum = '';
 
     //console.log(pitanja_spisak.length, pitanja_spisak, pitanja.length);
@@ -131,14 +107,13 @@
         border-radius: 2px; 
         border: 1px solid rgb(104, 104, 104); 
         display: inline-block;
-        padding: 3px 12px;
+        padding: 1px 4px;
         /*cursor: pointer;*/">
           <p style="font-size: small" class="snippet">[${poruka.b_id}] ${poruka.datum_upisa}</p>
-          <h3 class="title">${poruka.tema}</h3>
-          <h4 class="title">${poruka.ime_tag}</h4>
-          <p class="snippet">${poruka.poruka}</p>
+          <p>${poruka.ime_tag}</p>
+          <h4>${poruka.tema}</h4>
+          <p>${poruka.poruka}</p>
       </div>
-      <br>
       <br>`;
 
     });
@@ -152,9 +127,4 @@
   </script>
 
 
-  <%- include("../partials/footer.ejs") %>
-  <%- include("../partials/footer2.ejs") %>
-
-
-</body>
-</html>
+<%- include(appDir + '/views/partials/t2'); %>

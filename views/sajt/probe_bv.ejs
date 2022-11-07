@@ -1,15 +1,9 @@
-<!doctype html>
-<html lang="sr">
-<%- include("../partials/head.ejs") %>
+<%- include(appDir + '/views/partials/t'); %>
 
-<body>
-
-  <%- include("../partials/header.ejs") %>
-
-  <div class="px-2">
+  <div class="container">
   
     <div>
-      <h1>Vue test</h1>
+      <h2>Vue test</h2>
       <p><mark>Benvenuto nella pagina per l'apprendimento e il test!</mark></p>
     </div>
 
@@ -26,10 +20,11 @@
         Html5: <progress min="0" max="100" :value="100-bar"></progress>
       </div>
       <br>
+
     </div>
     
     <div>
-      <a href="/sajt/probe?fajl=sistem.ejs"> <button type="button" class="btn btn-warning">Data di sistema!</button></a>
+      <a href="/sajt/probe_bv?fajl=sistem.ejs"> <button type="button" class="btn btn-warning">Data di sistema!</button></a>
     </div>
 
   </div>
@@ -72,7 +67,4 @@
 
   </script>
 
-  <script src="/node_mod/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+<%- include(appDir + '/views/partials/t2'); %>
