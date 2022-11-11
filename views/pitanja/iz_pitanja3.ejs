@@ -1,10 +1,6 @@
-<html lang="sr">
-<%- include("../partials/head.ejs") %>
-
-<body>
-  <%- include("../partials/header.ejs") %>
-
-  <div class="blogs content"></div>
+<%- include(appDir + '/views/partials/t'); %>
+    
+  <div class="container">
 
     <h4><%= h4_oprp %>:</h4>
 
@@ -56,9 +52,7 @@
 
 
     <div id="t_spisak_js">
-
     </div>
-
 
 
     <div id="t_ispitivanje">
@@ -77,18 +71,11 @@
       
     </div>
 
-
-
     <div id="t_auto_test">
-      
     </div>
-
-
 
     <div id="t_auto_test_rezultat">
-
     </div>
-    
 
 
   </div>
@@ -305,8 +292,4 @@
 
   </script>
 
-  <%- include("../partials/footer.ejs") %>
-  <%- include("../partials/footer2.ejs") %>
-
-</body>
-</html>
+<%- include(appDir + '/views/partials/t2'); %>

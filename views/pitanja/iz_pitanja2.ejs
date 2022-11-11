@@ -1,10 +1,6 @@
-<html lang="sr">
-<%- include("../partials/head.ejs") %>
+<%- include(appDir + '/views/partials/t'); %>
 
-<body>
-  <%- include("../partials/header.ejs") %>
-
-  <div class="blogs content"></div>
+  <div class="container">
 
     <h3><%= h4_oprp %></h3>
     <h3>Odaberite oblasti.</h3>
@@ -130,8 +126,4 @@
 
   </script>
 
-  <%- include("../partials/footer.ejs") %>
-  <%- include("../partials/footer2.ejs") %>
-
-</body>
-</html>
+<%- include(appDir + '/views/partials/t2'); %>
